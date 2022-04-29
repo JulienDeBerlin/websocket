@@ -1,7 +1,5 @@
 package julien.firstwebsocket.config;
 
-import julien.firstwebsocket.interceptor.HttpHandshakeInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -12,17 +10,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker // enables WebSocket message handling, backed by a message broker.
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-  private final HttpHandshakeInterceptor handshakeInterceptor;
-
-  @Autowired // constructor injection better than field injection
-  public WebSocketConfig(final HttpHandshakeInterceptor handshakeInterceptor) {
-    this.handshakeInterceptor = handshakeInterceptor;
-  }
 
   @Override
   // defining the URL used by the client for setting up the WebSocket connection with the server.
   public void registerStompEndpoints(final StompEndpointRegistry registry) {
-    registry.addEndpoint("/ws").withSockJS().setInterceptors(handshakeInterceptor);
+    registry.addEndpoint("/ws").withSockJS();
   }
 
   @Override

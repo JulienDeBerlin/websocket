@@ -8,19 +8,19 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class WebSocketController {
+public class ChatController {
 
 
   @MessageMapping("/chat.sendMessage") // The @MessageMapping annotation ensures that,
   // if a message is sent to the /chat.sendMessage destination, the sendMessage() method is called.
-  @SendTo("/topic/publicChatRoom")
+  @SendTo("/topic/public")
   // The return value is broadcast to all subscribers of /topic/publicChatRoom
   public ChatMessage sendMessage(@Payload final ChatMessage chatMessage) {
     return chatMessage;
   }
 
   @MessageMapping("/chat.addUser")
-  @SendTo("/topic/publicChatRoom")
+  @SendTo("/topic/public")
   public ChatMessage addUser(@Payload final ChatMessage chatMessage,
       final SimpMessageHeaderAccessor headerAccessor) {
     // Add username in web socket session
